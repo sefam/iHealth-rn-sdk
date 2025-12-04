@@ -86,6 +86,18 @@ typedef NS_ENUM(NSUInteger, BPDeviceError) {
     BPDeviceError_CommunicationTimeout,
 };
 
+/**
+ BP unit
+ */
+typedef NS_ENUM(NSUInteger, BPUnit) {
+    /// Unknown
+    BPUnit_Unknown = 0,
+    /// mmHg
+    BPUnit_mmHg = 1,
+    /// kPa
+    BPUnit_kPa = 2,
+};
+
 
 typedef void(^BlockEnergyDetailValue)(NSNumber *energyValue,NSNumber *mVolt, NSNumber* measureTimesLeft);
 typedef void(^BlockEnergyValue)(NSNumber *energyValue);
@@ -122,6 +134,8 @@ typedef void(^BlockMeasureStatus)(NSDictionary *statusDict);
 
 typedef void(^BlockDisplayStatus)(NSDictionary *statusDict);
 
+typedef void(^BlockDeviceIDPS)(NSDictionary *idpsDict);
+
 
 #define BP3ConnectNoti      @"BP3ConnectNoti"
 #define BP3DisConnectNoti   @"BP3DisConnectNoti"
@@ -155,6 +169,12 @@ typedef void(^BlockDisplayStatus)(NSDictionary *statusDict);
 #define KN550BTConnectNoti  @"KN550BTConnectNoti"
 #define KN550BTDisConnectNoti  @"KN550BTDisConnectNoti"
 
+
+#define KN550LTDiscover     @"KN550LTDiscover"
+#define KN550LTConnectFailed   @"KN550LTConnectFailed"
+#define KN550LTConnectNoti  @"KN550LTConnectNoti"
+#define KN550LTDisConnectNoti  @"KN550LTDisConnectNoti"
+
 #define KD926Discover       @"KD926Discover"
 #define KD926ConnectFailed  @"KD926ConnectFailed"
 #define KD926ConnectNoti    @"KD926ConnectNoti"
@@ -164,6 +184,17 @@ typedef void(^BlockDisplayStatus)(NSDictionary *statusDict);
 #define KD723ConnectFailed  @"KD723ConnectFailed"
 #define KD723ConnectNoti    @"KD723ConnectNoti"
 #define KD723DisConnectNoti @"KD723DisConnectNoti"
+
+#define KD723_V2Discover       @"KD723_V2Discover"
+#define KD723_V2ConnectFailed  @"KD723_V2ConnectFailed"
+#define KD723_V2ConnectNoti    @"KD723_V2ConnectNoti"
+#define KD723_V2DisConnectNoti @"KD723_V2DisConnectNoti"
+
+
+#define KD5811BTDiscover        @"KD5811BTDiscover"
+#define KD5811BTConnectFailed   @"KD5811BTConnectFailed"
+#define KD5811BTConnectNoti     @"KD5811BTConnectNoti"
+#define KD5811BTDisConnectNoti  @"KD5811BTDisConnectNoti"
 
 #define ABPMDiscover        @"ABPMDiscover"
 #define ABPMConnectFailed   @"ABPMConnectFailed"
@@ -252,4 +283,24 @@ typedef void(^BlockDisplayStatus)(NSDictionary *statusDict);
 #define kFunctionBPBackLightControl @"haveBackLightSetting"
 #define kFunctionBPClockDisplayControl @"haveClockShowSetting"
 #define kFunctionBPMaxHistoryCount @"maxHistoryCount"
+#define kFunctionBPAMPM   @"is24Hour"
+#define kFunctionBPDeviceTime   @"deviceTime"
+
+#define kFunctionBPDeviceSYSTime   @"deviceSysTime"
+
+#define kFunctionBPLastOperatingState @"lastOperatingState"
+#define kFunctionBPHaveRepeatedlyMeasure @"haveRepeatedlyMeasure"
+
+#define kFunctionBPMemoryGroup @"memoryGroup"
+
+#define kFunctionBPMaxMemoryCapacity @"maxMemoryCapacity"
+#define kFunctionBPHaveShowUnitSetting @"haveShowUnitSetting"
+#define kFunctionBPShowUnit @"showUnit"
+
+#define kFunctionBPCuffLooseFlg @"haveCuffLooseFlg"
+
+#define kFunctionBPBodyMovementFlg @"haveBodyMovementFlg"
+
+#define kFunctionBPCurrentUser @"currentUser"
+
 #endif

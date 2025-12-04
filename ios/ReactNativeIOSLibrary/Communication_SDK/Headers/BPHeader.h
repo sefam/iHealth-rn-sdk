@@ -51,4 +51,13 @@
 #import "BP5C.h"
 #import "BP5CController.h"
 
+#import "KD723_V2.h"
+#import "KD723_V2Controller.h"
+
+
+#import "KD5811BT.h"
+#import "KD5811BTController.h"
+
+#import "KN550LT.h"
+#import "KN550LTController.h"
 #endif

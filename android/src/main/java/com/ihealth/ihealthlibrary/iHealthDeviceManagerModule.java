@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.util.Log;
+import android.os.Build;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Callback;
@@ -43,7 +44,6 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
 
     private final static String AM3S  = "AM3S";
     private final static String AM4   = "AM4";
-    private final static String AM5   = "AM5";
     private final static String AM6   = "AM6";
     private final static String PO3   = "PO3";
     private final static String BP5   = "BP5";
@@ -64,8 +64,6 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
     private final static String BG5S = "BG5S";
     private final static String BG5L = "BG5L";
     private final static String BTM  = "BTM";
-    private final static String ECG3 = "ECG3";
-    private final static String ECG3USB = "ECG3USB";
 
     private final static String PT3SBT = "PT3SBT";
     private final static String TS28B = "TS28B";
@@ -105,10 +103,7 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
         public void onScanDevice(String mac, String deviceType, int rssi, Map manufactorData) {
           WritableMap params = Arguments.createMap();
           params.putString("mac", mac);
-          if (deviceType.equals("ECGUSB")) {
-              params.putString("type", "ECG3USB");
-
-          } else if (deviceType.equals("KN-550BT")) {
+          if (deviceType.equals("KN-550BT")) {
               params.putString("type", "KN550");
 
           } else {
@@ -131,10 +126,7 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
             if (eventName != null) {
               WritableMap params = Arguments.createMap();
               params.putString("mac", mac);
-              if (deviceType.equals("ECGUSB")) {
-                params.putString("type", "ECG3USB");
-
-              } else if (deviceType.equals("KN-550BT")) {
+              if (deviceType.equals("KN-550BT")) {
                 params.putString("type", "KN550");
 
               } else {
@@ -222,9 +214,6 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
                 module = getReactApplicationContext().getNativeModule(AM4Module.class);
                 break;
 
-            case iHealthDevicesManager.TYPE_AM5:
-                module = getReactApplicationContext().getNativeModule(AM5Module.class);
-                break;
 
             case iHealthDevicesManager.TYPE_AM6:
                 module = getReactApplicationContext().getNativeModule(AM6Module.class);
@@ -273,14 +262,6 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
                 module = getReactApplicationContext().getNativeModule(BTMModule.class);
                 break;
 
-            case iHealthDevicesManager.TYPE_ECG3:
-                module = getReactApplicationContext().getNativeModule(ECGModule.class);
-                break;
-
-            case iHealthDevicesManager.TYPE_ECG3_USB:
-                module = getReactApplicationContext().getNativeModule(ECGUSBModule.class);
-                break;
-
             case iHealthDevicesManager.TYPE_PT3SBT:
                 module = getReactApplicationContext().getNativeModule(PT3SBTModule.class);
                 break;
@@ -318,7 +299,6 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
         final Map<String, Object> constants = new HashMap<>();
         constants.put(AM3S, iHealthDevicesManager.DISCOVERY_AM3S);
         constants.put(AM4, iHealthDevicesManager.DISCOVERY_AM4);
-        constants.put(AM5, iHealthDevicesManager.DISCOVERY_AM5);
         constants.put(AM6, iHealthDevicesManager.DISCOVERY_AM6);
         constants.put(PO3, iHealthDevicesManager.DISCOVERY_PO3);
         constants.put(BP5, iHealthDevicesManager.DISCOVERY_BP5);
@@ -337,8 +317,6 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
         constants.put(BG5, iHealthDevicesManager.DISCOVERY_BG5);
         constants.put(BG5S, iHealthDevicesManager.DISCOVERY_BG5S);
         constants.put(BTM, iHealthDevicesManager.DISCOVERY_FDIR_V3);
-        constants.put(ECG3, iHealthDevicesManager.DISCOVERY_ECG3);
-        constants.put(ECG3USB, iHealthDevicesManager.DISCOVERY_ECG3_USB);
         constants.put(PT3SBT, iHealthDevicesManager.DISCOVERY_PT3SBT);
         constants.put(TS28B, iHealthDevicesManager.DISCOVERY_TS28B);
         constants.put(NT13B, iHealthDevicesManager.DISCOVERY_NT13B);
@@ -395,9 +373,6 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
 
             case "AM4":
                 return DiscoveryTypeEnum.AM4;
-
-            case "AM5":
-                return DiscoveryTypeEnum.AM5;
 
             case "AM6":
                 return DiscoveryTypeEnum.AM6;
@@ -540,7 +515,12 @@ public class iHealthDeviceManagerModule extends iHealthBaseModule implements Lif
         intentFilter.addAction(Bg1Profile.ACTION_BG1_MEASURE_GET_BLOOD);
         intentFilter.addAction(Bg1Profile.ACTION_BG1_MEASURE_STRIP_OUT);
         intentFilter.addAction(Bg1Profile.ACTION_BG1_IDPS);
-        mContext.registerReceiver(broadcastReceiver, intentFilter);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mContext.registerReceiver(broadcastReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            mContext.registerReceiver(broadcastReceiver, intentFilter);
+        }
         mBroadcastReceiverRegistered = true;
     }
 

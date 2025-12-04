@@ -21,8 +21,6 @@ public class iHealthDeviceManagerPackage implements ReactPackage {
         modules.add(new AM3SModule(reactContext));
         modules.add(new AM4Module(reactContext));
         modules.add(new AMProfileModule(reactContext));
-        modules.add(new AM5Module(reactContext));
-        modules.add(new AM5ProfileModule(reactContext));
         modules.add(new AM6Module(reactContext));
         modules.add(new AM6ProfileModule(reactContext));
         modules.add(new BP5Module(reactContext));
@@ -52,9 +50,6 @@ public class iHealthDeviceManagerPackage implements ReactPackage {
         modules.add(new HS6ProfileModule(reactContext));
         modules.add(new BTMModule(reactContext));
         modules.add(new BTMProfileModule(reactContext));
-        modules.add(new ECGModule(reactContext));
-        modules.add(new ECGProfileModule(reactContext));
-        modules.add(new ECGUSBModule(reactContext));
         modules.add(new TS28BModule(reactContext));
         modules.add(new TS28BProfileModule(reactContext));
         modules.add(new NT13BModule(reactContext));
